@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <link name="base_footprint"/>
+    <link name="base_link"/>   <!--base_footprint -->
 
     <xacro:property name="base_constant" value="0.08333333333333333"/>
     <xacro:property name="base_mass"     value="1.0"/>
@@ -9,7 +9,7 @@
     <xacro:property name="base_height"   value="0.048"/>
     <xacro:property name="base_depth"    value="0.16"/>
 
-    <link name="base_link">
+    <link name="chassis">
         <inertial>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <mass value="1.0"/>
@@ -24,7 +24,7 @@
                 <box size="0.23 0.16 0.048"/>
             </geometry>
             <material name="">
-                <color rgba="1.0 0.0 0.0 1.0"/>
+                <color rgba="1.0 1.0 0.0 1.0"/>
                 <texture filename=""/>
             </material>
         </visual>
@@ -36,10 +36,14 @@
         </collision>
     </link>
 
-    <joint name="base_joint" type="fixed">
-        <origin xyz="0.0 0.0 0.040" rpy="0.0 0.0 0.0"/>
-        <parent link="base_footprint"/>
-        <child link="base_link"/>
+    <gazebo reference = "chassis">
+        <material>Gazebo/Yellow</material> 
+    </gazebo>
+
+    <joint name="chassis_joint" type="fixed">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <parent link="base_link"/>
+        <child link="chassis"/>
         <axis xyz="0.0 0.0 0.0"/>
     </joint>
 
@@ -71,9 +75,13 @@
             </collision>
         </link>
 
+        <gazebo reference = "wheel_${name}_link">
+            <material>Gazebo/Black</material> 
+        </gazebo>
+
         <joint name="wheel_${name}_joint" type="continuous">
             <origin xyz="${x} ${y} -0.007" rpy="1.57 0.0 0.0"/>
-            <parent link="base_link"/>
+            <parent link="chassis"/>
             <child link="wheel_${name}_link"/>
             <axis xyz=".0 .0 1.0"/>
         </joint>
