@@ -48,7 +48,10 @@
     </joint>
 
     <!-- All Wheel links and joints -->
+
+
     <xacro:macro name="wheel" params="name x y">
+
         <link name="wheel_${name}_link">
             <inertial>
                 <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
@@ -88,16 +91,42 @@
 
     </xacro:macro>
 
+
     <xacro:property name="wheel_constant"   value="0.08333333333333333"/>
     <xacro:property name="wheel_mass"       value="0.5"/>
     <xacro:property name="wheel_radius"     value="0.0425"/>
     <xacro:property name="wheel_height"     value="0.04"/>
+
 
     <!-- Wheel Creating using macros -->
     <xacro:wheel name="rear_right"  x="0.085" y =" 0.105"/>
     <xacro:wheel name="front_right" x="-0.085" y =" 0.105"/>
     <xacro:wheel name="front_left"  x="-0.085" y =" -0.105"/>
     <xacro:wheel name="rear_left"   x="0.085" y =" -0.105"/>
+
+
+    <gazebo>
+        <plugin name="diff_drive" filename="libgazebo_ros_skid_steer_drive.so">
+            <updateRate>100.0</updateRate>
+            <leftFrontJoint>wheel_front_left_joint</leftFrontJoint>
+            <rightFrontJoint>wheel_front_right_joint</rightFrontJoint>
+            <leftRearJoint>wheel_rear_left_joint</leftRearJoint>
+            <rightRearJoint>wheel_rear_right_joint</rightRearJoint>
+            <wheelSeparation>0.16</wheelSeparation>
+            <wheelDiameter>0.085</wheelDiameter>
+            <broadcastTF>true</broadcastTF>
+
+            <max_wheel_torque>200</max_wheel_torque>
+            <max_wheel_acceleration>10.0</max_wheel_acceleration>
+
+            <odometry_frame>odom</odometry_frame>
+            <robot_base_frame>chassis</robot_base_frame>
+
+            <publish_odom>true</publish_odom>
+            <publish_odom_tf>true</publish_odom_tf>
+            <publish_wheel_tf>true</publish_wheel_tf>
+        </plugin>
+    </gazebo>
 
 
 </robot>
