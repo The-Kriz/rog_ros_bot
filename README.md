@@ -1,7 +1,5 @@
-## Robot Package Template
-
-This is a GitHub template. You can make your own copy by clicking the green "Use this template" button.
-
-It is recommended that you keep the repo/package name the same, but if you do change it, ensure you do a "Find all" using your IDE (or the built-in GitHub IDE by hitting the `.` key) and rename all instances of `rog_ros_bot` to whatever your project's name is.
-
-Note that each directory currently has at least one file in it to ensure that git tracks the files (and, consequently, that a fresh clone has direcctories present for CMake to find). These example files can be removed if required (and the directories can be removed if `CMakeLists.txt` is adjusted accordingly).
+![2](https://github.com/The-Kriz/rog_ros_bot/assets/90817926/97e8e0a6-08bc-4487-9f2c-c48c43e096ba)
+![pic1](https://github.com/The-Kriz/rog_ros_bot/assets/90817926/664ad651-b257-47d0-9ee8-8e4d322c571b)
+![pic3](https://github.com/The-Kriz/rog_ros_bot/assets/90817926/2c37552a-216d-4e06-966d-ef815a751a47)
+![Screenshot from 2023-09-07 19-45-02](https://github.com/The-Kriz/rog_ros_bot/assets/90817926/1e616b56-96be-48f9-88ae-524062fa1286)
+![Screenshot from 2023-09-07 19-46-45](https://github.com/The-Kriz/rog_ros_bot/assets/90817926/b035e7f9-fc5e-4fd1-a0b4-2d4512c91451)
