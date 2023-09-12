@@ -87,6 +87,8 @@
             <parent link="chassis"/>
             <child link="wheel_${name}_link"/>
             <axis xyz=".0 .0 1.0"/>
+            <limit effort="10000" velocity="1000" />
+	        <dynamics damping="1.0" friction="1.0" />
         </joint>
 
     </xacro:macro>
@@ -105,7 +107,7 @@
     <xacro:wheel name="rear_left"   x="0.085" y =" -0.105"/>
 
 
-    <gazebo>
+    <!-- <gazebo>
         <plugin name="diff_drive" filename="libgazebo_ros_skid_steer_drive.so">
             <updateRate>100.0</updateRate>
             <leftFrontJoint>wheel_front_left_joint</leftFrontJoint>
@@ -126,7 +128,7 @@
             <publish_odom_tf>true</publish_odom_tf>
             <publish_wheel_tf>true</publish_wheel_tf>
         </plugin>
-    </gazebo>
+    </gazebo> -->
 
 
 </robot>

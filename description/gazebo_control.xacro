@@ -4,29 +4,90 @@
         <!--skid_steer_drive_controller-->
 
     <gazebo>
-        <plugin name="diff_drive" filename="libgazebo_ros_skid_steer_drive.so">
+        <plugin name="gazebo_ros_joint_state_publisher"
+            filename = "libgazebo_ros_joint_state_publisher.so">
+            <update_rate>20</update_rate>
+            <joint_name>wheel_front_left_joint</joint_name>
+            <joint_name>wheel_front_right_joint</joint_name>
+            <joint_name>wheel_rear_left_joint</joint_name>
+            <joint_name>wheel_rear_right_joint</joint_name>
+            <joint_name>wheel_rear_right_joint</joint_name>
+        </plugin>
+    </gazebo>
+
+    <gazebo>
+        <plugin name="gazebo_ros_joint_pose_trajectory"
+            filename = "libgazebo_ros_joint_pose_trajectory.so">
+            <update_rate>20</update_rate>
+            <joint_name>wheel_front_left_joint</joint_name>
+            <joint_name>wheel_front_right_joint</joint_name>
+            <joint_name>wheel_rear_left_joint</joint_name>
+            <joint_name>wheel_rear_right_joint</joint_name>
+            <joint_name>wheel_rear_right_joint</joint_name>
+        </plugin>
+    </gazebo>
+
+    <!-- <gazebo>
+        <plugin name="mobile_base_controller" filename="libgazebo_ros_skid_steer_drive.so">
             <updateRate>100.0</updateRate>
+            <robotNamespace>/armbot</robotNamespace>
+
             <leftFrontJoint>wheel_front_left_joint</leftFrontJoint>
             <rightFrontJoint>wheel_front_right_joint</rightFrontJoint>
             <leftRearJoint>wheel_rear_left_joint</leftRearJoint>
             <rightRearJoint>wheel_rear_right_joint</rightRearJoint>
+
             <wheelSeparation>0.16</wheelSeparation>
             <wheelDiameter>0.085</wheelDiameter>
-            <broadcastTF>true</broadcastTF>
+            <robotBaseFrame>base_link</robotBaseFrame>
 
-            <max_wheel_torque>200</max_wheel_torque>
-            <max_wheel_acceleration>10.0</max_wheel_acceleration>
-
-            <odometry_frame>odom</odometry_frame>
-            <robot_base_frame>chassis</robot_base_frame>
-
+            <torque>20</torque>
+            <commandTopic>mobile_base_controller/cmd_vel</commandTopic>
+            <odometryTopic>mobile_base_controller/odom</odometryTopic>
+            <odometryFrame>odom</odometryFrame>
             <publish_odom>true</publish_odom>
             <publish_odom_tf>true</publish_odom_tf>
             <publish_wheel_tf>true</publish_wheel_tf>
+            <covariance_x>100.0</covariance_x>
+            <covariance_y>100.0</covariance_y>
+            <covariance_yaw>100.0</covariance_yaw>
+            <odometryRate>20.0</odometryRate>
+            <broadcastTF>true</broadcastTF>
+        </plugin>
+    </gazebo> -->
+
+    <gazebo>
+        <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+            <updateRate>10.0</updateRate>
+            <robotNamespace>/</robotNamespace>
+            <leftFrontJoint>left_wheel_hinge_front</leftFrontJoint>
+            <rightFrontJoint>right_wheel_hinge_front</rightFrontJoint>
+            <leftRearJoint>left_wheel_hinge_back</leftRearJoint>
+            <rightRearJoint>right_wheel_hinge_back</rightRearJoint>
+            <wheelSeparation>0.4</wheelSeparation>
+            <wheelDiameter>0.2</wheelDiameter>
+            <robotBaseFrame>robot_footprint</robotBaseFrame>
+            <torque>10</torque>
+
+            <topicName>cmd_vel</topicName>
+            <odometryTopic>odom</odometryTopic>
+            <odometryFrame>odom</odometryFrame>
+
+            <commandTopic>cmd_vel</commandTopic>
+            <topic_name_twist>cmd_vel</topic_name_twist>
+            <topic_name_odometry>odom</topic_name_odometry>
+            <topic_name_joint>joint</topic_name_joint>
+
+            <broadcastTF>true</broadcastTF>
+
+            <covariance_x>0.0001</covariance_x>
+            <covariance_y>0.0001</covariance_y>
+            <covariance_yaw>0.01</covariance_yaw>
         </plugin>
     </gazebo>
 
 
 </robot> 
+
 
 
