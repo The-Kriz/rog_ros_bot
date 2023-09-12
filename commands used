@@ -31,3 +31,5 @@ ros2 topics
 
 ros2 run teleop_twist_keyboard teleop_twist_keyboard 
 colcon clean workspace
+
+git commit -m "update"
