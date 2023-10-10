@@ -11,7 +11,7 @@ rviz2
 
 ros2 run joint_state_publisher joint_state_publisher
 ros2 run joint_state_publisher_gui joint_state_publisher_gui
-rtq_graph
+rqt_graph
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 Install 
@@ -33,3 +33,13 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard
 colcon clean workspace
 
 git commit -m "update"
+
+
+kriz@kriz-ROG:~$ sudo apt install ros-humble-slam-toolbox
+
+kriz@kriz-ROG:~$ cp /opt/ros/humble/share/slam_toolbox/config/mapper_params_online_async.yaml dev_ws/src/rog_ros_bot/config/
+
+kriz@kriz-ROG:~/dev_ws$ ros2 launch slam_toolbox  online_async_launch.py params_file:=./src/rog_ros_bot/config/mapper_params_online_async.yaml use_sim_time:=true
+
+
+remmina
