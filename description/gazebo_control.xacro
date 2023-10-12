@@ -14,8 +14,8 @@
             <wheel_separation>0.215</wheel_separation>
             <wheel_separation>0.215</wheel_separation>
 
-            <wheel_diameter>0.035</wheel_diameter>
-            <wheel_diameter>0.035</wheel_diameter>
+            <wheel_diameter>0.038</wheel_diameter>
+            <wheel_diameter>0.038</wheel_diameter>
 
             <max_wheel_torque>50</max_wheel_torque>
             <max_wheel_acceleration>10.0</max_wheel_acceleration>
@@ -30,3 +30,4 @@
     </gazebo>
 
 </robot> 
+
