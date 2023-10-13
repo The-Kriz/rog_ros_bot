@@ -4,10 +4,10 @@
     <link name="base_link"/>   <!--base_footprint -->
 
     <xacro:property name="base_constant" value="0.08333333333333333"/>
-    <xacro:property name="base_mass"     value="1.0"/>
-    <xacro:property name="base_width"    value="0.23"/>
+    <xacro:property name="base_mass"     value="4.0"/>
+    <xacro:property name="base_length"    value="0.23"/>
     <xacro:property name="base_height"   value="0.048"/>
-    <xacro:property name="base_depth"    value="0.16"/>
+    <xacro:property name="base_width"    value="0.16"/>
 
     <xacro:property name="wheel_constant"   value="0.08333333333333333"/>
     <xacro:property name="wheel_mass"       value="0.5"/>
@@ -20,14 +20,14 @@
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <mass value="5.0"/>
             <inertia
-                ixx="${base_constant * base_mass * (base_height*base_height + base_depth*base_depth)}" ixy="0.0" ixz="0.0"
-                iyy="${base_constant * base_mass * (base_width*base_width   + base_depth*base_depth)}" iyz="0.0"
-                izz="${base_constant * base_mass * (base_width*base_width   + base_height*base_height)}"/>
+                ixx="${base_constant * base_mass * (base_height*base_height + base_width*base_width)}" ixy="0.0" ixz="0.0"
+                iyy="${base_constant * base_mass * (base_length*base_length   + base_width*base_width)}" iyz="0.0"
+                izz="${base_constant * base_mass * (base_length*base_length   + base_height*base_height)}"/>
         </inertial>
         <visual name="">
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <box size="0.23 0.16 0.048"/>
+                <box size="${base_length} ${base_width} ${base_height}"/> <!-- 0.23 0.16 0.048 -->
             </geometry>
             <material name="">
                 <color rgba="1.0 1.0 0.0 1.0"/>
@@ -37,7 +37,7 @@
         <collision>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <box size="0.23 0.16 0.048"/>
+                <box size="${base_length} ${base_width} ${base_height}"/> <!-- 0.23 0.16 0.048 -->
             </geometry>
         </collision>
     </link>
@@ -72,7 +72,7 @@
             <visual name="">
                 <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
                 <geometry>
-                    <cylinder radius="0.0425" length="0.04"/>
+                    <cylinder radius="${wheel_radius}" length="0.04"/>
                 </geometry>
                 <material name="black">
                     <color rgba=".0 .0 0.0 1.0"/>
@@ -81,7 +81,7 @@
             <collision>
                     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
                     <geometry>
-                        <cylinder radius="0.0425" length="0.04"/>
+                        <sphere radius="${wheel_radius}"/>
                     </geometry>
             </collision>
         </link>
