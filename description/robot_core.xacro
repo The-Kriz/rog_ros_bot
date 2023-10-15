@@ -2,6 +2,9 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <xacro:include filename="inertial_macros.xacro"/>
+    <xacro:include filename="wheels.xacro"/>
+    <xacro:include filename="acrylic_base.xacro"/>
+    <xacro:include filename="stand_off.xacro"/>
 
     <link name="base_link"/>   <!--base_footprint -->
 
@@ -25,13 +28,15 @@
     <xacro:property name="wheel_radius"     value="0.0425"/>
     <xacro:property name="wheel_thickness"  value="0.04"/>
 
+    <xacro:property name="acrylic_thickness"  value="0.003"/>
+    <xacro:property name="acrylic_width"  value="0.16"/>
+
 
     <link name="chassis">
-
         <visual name="">
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0 0 0"/>
             <geometry>
-                <box size="${base_length} ${base_width} ${base_height}"/> <!-- 0.23 0.16 0.048 -->
+                <box size="${base_length} ${base_width} ${base_height}"/> <!-- 0.23 0.16 0.048 ${base_height}-->
             </geometry>
             <material name="">
                 <color rgba="1.0 1.0 0.0 1.0"/>
@@ -40,16 +45,15 @@
         </visual>
 
         <collision>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0 0 0"/>
             <geometry>
                 <box size="${base_length} ${base_width} ${base_height}"/> <!-- 0.23 0.16 0.048 -->
             </geometry>
         </collision>
 
-        <xacro:inertial_box mass="0.5" x="${base_length}" y="${base_width}" z="${base_height}">
-            <origin xyz="${base_length/2} 0 ${base_height/2}" rpy="0 0 0"/>
+        <xacro:inertial_box mass="${base_mass}" x="${base_length}" y="${base_width}" z="${base_height}">  <!--mass="${base_mass}"-->
+            <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_box>
-
     </link>
 
     <gazebo reference = "chassis">
@@ -57,61 +61,31 @@
     </gazebo>
 
     <joint name="chassis_joint" type="fixed">
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
         <child link="chassis"/>
-        <axis xyz="0.0 0.0 0.0"/>
+        <origin xyz="0.0 0.0 0.0425"/>
     </joint>
 
 
+    <xacro:wheel name="front_left"  x="0.085" y =" 0.105" wheel_mass="${wheel_mass}" wheel_radius="${wheel_radius}" wheel_thickness="${wheel_thickness}"/>
+    <xacro:wheel name="rear_left" x="-0.085" y =" 0.105" wheel_mass="${wheel_mass}" wheel_radius="${wheel_radius}" wheel_thickness="${wheel_thickness}"/>
+    <xacro:wheel name="rear_right"  x="-0.085" y =" -0.105" wheel_mass="${wheel_mass}" wheel_radius="${wheel_radius}" wheel_thickness="${wheel_thickness}"/>
+    <xacro:wheel name="front_right"   x="0.085" y =" -0.105" wheel_mass="${wheel_mass}" wheel_radius="${wheel_radius}" wheel_thickness="${wheel_thickness}"/> 
 
-    <!-- All Wheel links and joints -->
+    <xacro:acrylic_base parent="chassis" child="jetson_base" sheet_mass="0.02" sheet_length="0.190" sheet_width="${acrylic_width}" sheet_thickness="${acrylic_thickness}" xyz="-0.016 0 0.048"  />
+    <xacro:acrylic_base parent="chassis" child="lidar_base" sheet_mass="0.01" sheet_length="0.160" sheet_width="${acrylic_width}" sheet_thickness="${acrylic_thickness}" xyz="0 0 0.090" />
 
+    <xacro:robot_pillar parent="chassis" child="chassis_pillar1" standoff_mass="0.002" standoff_length="0.022" standoff_radius="0.003" xyz="0.06  0.07 0.036" />
+    <xacro:robot_pillar parent="chassis" child="chassis_pillar2" standoff_mass="0.002" standoff_length="0.022" standoff_radius="0.003" xyz="0.06  -0.07 0.036" />
+    <xacro:robot_pillar parent="chassis" child="chassis_pillar3" standoff_mass="0.002" standoff_length="0.022" standoff_radius="0.003" xyz="-0.06 0.07 0.036" />
+    <xacro:robot_pillar parent="chassis" child="chassis_pillar4" standoff_mass="0.002" standoff_length="0.022" standoff_radius="0.003" xyz="-0.06 -0.07 0.036" />
 
-    <xacro:macro name="wheel" params="name x y">
+    <xacro:robot_pillar parent="chassis" child="jetson_base_pillar1" standoff_mass="0.003" standoff_length="0.04" standoff_radius="0.003" xyz="0.06  0.07  0.07" />
+    <xacro:robot_pillar parent="chassis" child="jetson_base_pillar2" standoff_mass="0.003" standoff_length="0.04" standoff_radius="0.003" xyz="0.06  -0.07 0.07" />
+    <xacro:robot_pillar parent="chassis" child="jetson_base_pillar3" standoff_mass="0.003" standoff_length="0.04" standoff_radius="0.003" xyz="-0.06 0.07  0.07" />
+    <xacro:robot_pillar parent="chassis" child="jetson_base_pillar4" standoff_mass="0.003" standoff_length="0.04" standoff_radius="0.003" xyz="-0.06 -0.07 0.07" />
 
-        <link name="wheel_${name}_link">
-
-            <visual name="">
-                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-                <geometry>
-                    <cylinder radius="${wheel_radius}" length="0.04"/>
-                </geometry>
-                <material name="black">
-                    <color rgba=".0 .0 0.0 1.0"/>
-                </material>
-            </visual>
-
-            <collision>
-                    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-                    <geometry>
-                        <sphere radius="${wheel_radius}"/>
-                    </geometry>
-            </collision>
-
-            <xacro:inertial_cylinder mass="${wheel_mass}" length="${wheel_thickness}" radius="${wheel_radius}">
-                <origin xyz="0 0 0" rpy="0 0 0"/>
-            </xacro:inertial_cylinder>
-        </link>
-
-        <gazebo reference = "wheel_${name}_link">
-            <material>Gazebo/Black</material> 
-        </gazebo>
-
-        <joint name="wheel_${name}_joint" type="continuous">
-            <parent link="chassis"/>
-            <child link="wheel_${name}_link"/>
-            <origin xyz="${x} ${y} -0.007" rpy="-1.57 0.0 0.0"/>
-            <axis xyz=".0 .0 1.0"/>
-            <!-- <limit effort="10000" velocity="1000" /> -->
-	        <!-- <dynamics damping="1.0" friction="1.0" /> -->
-        </joint>
-
-    </xacro:macro>
-
-    <xacro:wheel name="front_left"  x="0.085" y =" 0.105"/>
-    <xacro:wheel name="rear_left" x="-0.085" y =" 0.105"/>
-    <xacro:wheel name="rear_right"  x="-0.085" y =" -0.105"/>
-    <xacro:wheel name="front_right"   x="0.085" y =" -0.105"/>
 
 </robot>
+
+

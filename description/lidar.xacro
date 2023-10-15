@@ -1,22 +1,21 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <xacro:property name="lidar_constant"   value="0.08333333333333333"/>
-    <xacro:property name="lidar_mass"       value="0.5"/>
+    <xacro:property name="lidar_mass"       value="0.010"/>
     <xacro:property name="lidar_radius"     value="0.0425"/>
-    <xacro:property name="lidar_height"     value="0.04"/>
+    <xacro:property name="lidar_height"     value="0.024"/>
 
     <joint name="laser_joint" type="fixed">
-        <parent link="chassis"/>
+        <parent link="lidar_base"/>
         <child link="laser_frame"/>
-        <origin xyz="-0.02 0.0 0.115" rpy="0.0 0.0 0.0"/>
+        <origin xyz="-0.00 0.0 0.035" rpy="0.0 0.0 0.0"/>
     </joint>
 
     <link name="laser_frame">
 
         <visual>
             <geometry>
-                <cylinder radius="0.07" length="0.03"/>
+                <cylinder radius="${lidar_radius}" length="${lidar_height}" />
             </geometry>
             <material name="">
                 <color rgba="1.0 0.0 0.0 1.0"/>
@@ -26,11 +25,11 @@
 
         <collision>
             <geometry>
-                <cylinder radius="0.07" length="0.03"/>
+                <cylinder radius="${lidar_radius}" length="${lidar_height}" />
             </geometry>
         </collision>
 
-        <xacro:inertial_cylinder mass="0.1" length="0.03" radius="0.07">
+        <xacro:inertial_cylinder mass="${lidar_mass}" length="${lidar_height}" radius="${lidar_radius}">
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_cylinder>
 

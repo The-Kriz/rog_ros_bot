@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="robot">
+
+    <xacro:include filename="inertial_macros.xacro"/>
+
+    <xacro:macro name="acrylic_base" params="parent child sheet_mass sheet_length sheet_width sheet_thickness xyz">
+
+        <link name="${child}">
+            <visual>
+                <geometry>
+                    <box size="${sheet_length} ${sheet_width} ${sheet_thickness}"/> 
+                </geometry>
+                <material name="black">
+                    <color rgba="0.0 0.0 0.0 1.0"/>
+                </material>
+            </visual>
+
+            <collision>
+                <geometry>
+                    <box size="${sheet_length} ${sheet_width} ${sheet_thickness}"/>
+                </geometry>
+            </collision>
+
+            <xacro:inertial_box mass="${sheet_mass}" x="${sheet_length}" y="${sheet_width}" z="${sheet_thickness}">
+                <origin xyz="${sheet_length/2} 0 ${sheet_thickness/2}" rpy="0 0 0"/>
+            </xacro:inertial_box>
+        </link>
+
+        <joint name="${parent}_to_${child}_joint" type="fixed">
+            <origin xyz="${xyz}" rpy="0 0 0" />
+            <parent link="${parent}" />
+            <child link="${child}" />
+        </joint>
+
+        <gazebo reference = "${child}">
+            <material>Gazebo/Black</material> 
+        </gazebo>
+
+    </xacro:macro>
+
+</robot>
