@@ -17,3 +17,9 @@
 ## URDF
 ![rviz pic](https://github.com/The-Kriz/rog_ros_bot/assets/90817926/cbf302e6-66fe-47a0-bc24-b182f577a467)
 ![gazebo](https://github.com/The-Kriz/rog_ros_bot/assets/90817926/12e0c792-45bc-40ff-9b38-798369b841f1)
+
+</br>
+</br>
+
+## SLAM
+![SLAM](https://github.com/The-Kriz/rog_ros_bot/assets/90817926/e7643d32-d192-4799-8a7c-126aeaa817d5)
