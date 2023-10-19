@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+
+    <xacro:macro name="robot_pillar" params="parent child standoff_mass standoff_length standoff_radius xyz">
+
+        <link name="${child}">
+            <visual>
+                <geometry>
+                    <cylinder radius="${standoff_radius}" length="${standoff_length}"/>
+                </geometry>
+                <material name="darkgold" >
+                    <color rgba="0.7098039215686275 0.5803921568627451 0.06274509803921569 1.0" />
+                </material>
+            </visual>
+
+            <collision>
+                <geometry>
+                    <cylinder radius="${standoff_radius}" length="${standoff_length}"/>
+                </geometry>
+            </collision>
+
+            <xacro:inertial_cylinder mass="${standoff_mass}" length="${standoff_length}" radius="${standoff_radius}">
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </xacro:inertial_cylinder>
+        </link>
+
+        <joint name="${parent}_to_${child}_joint" type="fixed">
+            <origin xyz="${xyz}" rpy="0 0 0"/>
+            <parent link="${parent}"/>
+            <child link="${child}"/>
+        </joint>
+
+        <gazebo reference = "${child}">
+            <material>Gazebo/Gold</material> 
+        </gazebo>
+
+    </xacro:macro>
+</robot>

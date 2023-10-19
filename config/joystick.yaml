@@ -14,14 +14,13 @@ teleop_node:
       x: 1.0
 
     axis_angular:
-      yaw: 0
+      yaw: 3
     scale_angular:
       yaw: 0.5
     scale_angular_turbo:
       yaw: 1.0
 
-
-    enable_button: 6
-    enable_turbo_button: 7
+    enable_button: 4
+    enable_turbo_button: 5
 
     require_enable_button: true

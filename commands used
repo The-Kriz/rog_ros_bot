@@ -1,13 +1,31 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+Setup
+
 cd dev_ws
-source install/setup.bash
 colcon build --symlink-install
+source install/setup.bash
+ros2 launch rog_ros_bot launch_sim.launch.py world:=./src/rog_ros_bot/worlds/small_house.world
+
+ros2 launch slam_toolbox online_async_launch.py slam_params_file:=./src/rog_ros_bot/config/mapper_params_online_async.yaml use_simtime:=true
+
+
+ros2 launch nav2_bringup navigation_launch.py use_sim_time:=true
+
+
+ros2 launch rog_ros_bot launch_sim.launch.py 
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+Launch 
 
 ros2 launch rog_ros_bot rplidar.launch.
 ros2 launch rog_ros_bot launch_sim.launch.py 
 ros2 launch rog_ros_bot rsp.launch.py
 
-rviz2
+ros2 launch slam_toolbox online_async_launch.py slam_params_file:=./src/rog_ros_bot/config/mapper_params_online_async.yaml use_simtime:=true
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+Ros2 run
 
 ros2 run joint_state_publisher joint_state_publisher
 ros2 run joint_state_publisher_gui joint_state_publisher_gui
@@ -20,26 +38,110 @@ sudo apt install ros-humble-ros2-control ros-humble-ros2-controllers ros-humble-
 sudo apt-get install ros-humble-teleop-twist-joy
 sudo apt install ros-humble-ros2-control ros-humble-ros2-controllers ros-humble-gazebo-ros2-control
 sudo apt-get install ros-humble-twist-mux
-
-
+sudo apt install joystick jstest-gtk evtest
+sudo apt install ros-humble-navigation2
+sudo apt install ros-humble-nav2-bringup
+sudo apt install ros-humble-twist-mux
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+Ros2
+
 ros2 service list
 ros2 node list
 ros2 topics
 
-ros2 run teleop_twist_keyboard teleop_twist_keyboard 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+Colcon
+
+colcon build --symlink-install
 colcon clean workspace
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+Git
 
 git commit -m "update"
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+SLAM
 
-kriz@kriz-ROG:~$ sudo apt install ros-humble-slam-toolbox
+sudo apt install ros-humble-slam-toolbox
+cp /opt/ros/humble/share/slam_toolbox/config/mapper_params_online_async.yaml dev_ws/src/rog_ros_bot/config/
+ros2 launch slam_toolbox online_async_launch.py slam_params_file:=/src/rog_ros_bot/config/mapper_params_online_async.yaml use_simtime:=true
 
-kriz@kriz-ROG:~$ cp /opt/ros/humble/share/slam_toolbox/config/mapper_params_online_async.yaml dev_ws/src/rog_ros_bot/config/
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+nav2
 
-kriz@kriz-ROG:~/dev_ws$ ros2 launch slam_toolbox  online_async_launch.py params_file:=./src/rog_ros_bot/config/mapper_params_online_async.yaml use_sim_time:=true
+sudo apt install ros-humble-navigation2
+sudo apt install ros-humble-nav2-bringup
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 remmina
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+Gazebo
+
+ros2 launch rog_ros_bot launch_sim.launch.py 
+ros2 launch rog_ros_bot launch_sim.launch.py world:=./src/rog_ros_bot/worlds/small_house.world
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+Rviz
+
+rviz2
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+Keyboard
+
+ros2 run teleop_twist_keyboard teleop_twist_keyboard 
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=diff_cont/cmd_vel_unstamped
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+Joystick
+
+sudo apt install joystick jstest-gtk evtest
+evtest
+jstest-gtk
+ros2 run joy
+ros2 run joy joy_enumerate_devices 
+ros2 run joy joy_node 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ros2 topic echo /cmd_vel
+
+
+ros2 run nav2_map_server map_server --ros-args -p yaml_filename:=my_map_save.yaml -p use_sim_time:=true
+ros2 run nav2_util lifecycle_bringup map_server
+
+
+ros2 run nav2_amcl  amcl  --ros-args -p use_sim_time:=true
+ros2 run nav2_util lifecycle_bringup amcl
+
+ros2 launch nav2_bringup navigation_launch.py use_sim_time:=true
+
+
+
+
+
+
+
+sudo apt-get --reinstall install ros-humble-navigation2
+sudo apt-get --reinstall install ros-humble-nav2-bringup
+
+
+teleop_node:
+  ros__parameters:
+    axis_linear:
+      x: 1
+    scale_linear:
+      x: 0.3
+    scale_linear_turbo:
+      x: 0.5
+
+    axis_angular:
+      yaw: 0
+    scale_angular:
+      yaw: 0.8
+    scale_angular_turbo:
+      yaw: 1.2

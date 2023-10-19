@@ -4,11 +4,11 @@
     <xacro:include filename="inertial_macros.xacro"/>
     <xacro:include filename="wheels.xacro"/>
     <xacro:include filename="acrylic_base.xacro"/>
-    <xacro:include filename="stand_off.xacro"/>
+    <xacro:include filename="standoff.xacro"/>
 
-    <link name="base_link"/>   <!--base_footprint -->
-
-    <!-- BASE_FOOTPRINT LINK -->
+    <link name="base_link"/>   
+    
+    <!--base_footprint -->
 
     <joint name="base_footprint_joint" type="fixed">
         <parent link="base_link"/>
@@ -31,27 +31,27 @@
     <xacro:property name="acrylic_thickness"  value="0.003"/>
     <xacro:property name="acrylic_width"  value="0.16"/>
 
+    <!--Main chassis -->
 
     <link name="chassis">
         <visual name="">
             <origin xyz="0 0 0"/>
             <geometry>
-                <box size="${base_length} ${base_width} ${base_height}"/> <!-- 0.23 0.16 0.048 ${base_height}-->
+                <box size="${base_length} ${base_width} ${base_height}"/> 
             </geometry>
             <material name="">
                 <color rgba="1.0 1.0 0.0 1.0"/>
-                <texture filename=""/>
             </material>
         </visual>
 
         <collision>
             <origin xyz="0 0 0"/>
             <geometry>
-                <box size="${base_length} ${base_width} ${base_height}"/> <!-- 0.23 0.16 0.048 -->
+                <box size="${base_length} ${base_width} ${base_height}"/> 
             </geometry>
         </collision>
 
-        <xacro:inertial_box mass="${base_mass}" x="${base_length}" y="${base_width}" z="${base_height}">  <!--mass="${base_mass}"-->
+        <xacro:inertial_box mass="${base_mass}" x="${base_length}" y="${base_width}" z="${base_height}"> 
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_box>
     </link>
@@ -66,14 +66,19 @@
         <origin xyz="0.0 0.0 0.0425"/>
     </joint>
 
+    <!-- Wheels -->
 
     <xacro:wheel name="front_left"  x="0.085" y =" 0.105" wheel_mass="${wheel_mass}" wheel_radius="${wheel_radius}" wheel_thickness="${wheel_thickness}"/>
     <xacro:wheel name="rear_left" x="-0.085" y =" 0.105" wheel_mass="${wheel_mass}" wheel_radius="${wheel_radius}" wheel_thickness="${wheel_thickness}"/>
     <xacro:wheel name="rear_right"  x="-0.085" y =" -0.105" wheel_mass="${wheel_mass}" wheel_radius="${wheel_radius}" wheel_thickness="${wheel_thickness}"/>
     <xacro:wheel name="front_right"   x="0.085" y =" -0.105" wheel_mass="${wheel_mass}" wheel_radius="${wheel_radius}" wheel_thickness="${wheel_thickness}"/> 
 
+    <!-- Acrylic base -->
+
     <xacro:acrylic_base parent="chassis" child="jetson_base" sheet_mass="0.02" sheet_length="0.190" sheet_width="${acrylic_width}" sheet_thickness="${acrylic_thickness}" xyz="-0.016 0 0.048"  />
     <xacro:acrylic_base parent="chassis" child="lidar_base" sheet_mass="0.01" sheet_length="0.160" sheet_width="${acrylic_width}" sheet_thickness="${acrylic_thickness}" xyz="0 0 0.090" />
+
+    <!-- Standoffs -->
 
     <xacro:robot_pillar parent="chassis" child="chassis_pillar1" standoff_mass="0.002" standoff_length="0.022" standoff_radius="0.003" xyz="0.06  0.07 0.036" />
     <xacro:robot_pillar parent="chassis" child="chassis_pillar2" standoff_mass="0.002" standoff_length="0.022" standoff_radius="0.003" xyz="0.06  -0.07 0.036" />
@@ -84,7 +89,6 @@
     <xacro:robot_pillar parent="chassis" child="jetson_base_pillar2" standoff_mass="0.003" standoff_length="0.04" standoff_radius="0.003" xyz="0.06  -0.07 0.07" />
     <xacro:robot_pillar parent="chassis" child="jetson_base_pillar3" standoff_mass="0.003" standoff_length="0.04" standoff_radius="0.003" xyz="-0.06 0.07  0.07" />
     <xacro:robot_pillar parent="chassis" child="jetson_base_pillar4" standoff_mass="0.003" standoff_length="0.04" standoff_radius="0.003" xyz="-0.06 -0.07 0.07" />
-
 
 </robot>
 

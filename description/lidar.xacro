@@ -17,10 +17,9 @@
             <geometry>
                 <cylinder radius="${lidar_radius}" length="${lidar_height}" />
             </geometry>
-            <material name="">
-                <color rgba="1.0 0.0 0.0 1.0"/>
-                <texture filename=""/>
-            </material>    
+            <material name="darkgrey" >
+                <color rgba="0.21176470588235294 0.21568627450980393 0.21568627450980393 1.0" />
+            </material>
         </visual>
 
         <collision>
@@ -36,10 +35,11 @@
     </link> 
 
     <gazebo reference="laser_frame">
-        <material>Gazebo/Red</material>
+        <material>Gazebo/Grey</material>
         <sensor name="laser" type="ray">
             <pose> 0 0 0 0 0 0 </pose>
-            <visualize>true</visualize>
+            <visualize>false</visualize>
+            <!-- <visualize>true</visualize> -->
             <update_rate>10</update_rate>
             <ray>
                 <scan>
