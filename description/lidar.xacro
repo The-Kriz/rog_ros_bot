@@ -7,11 +7,11 @@
 
     <joint name="laser_joint" type="fixed">
         <parent link="lidar_base"/>
-        <child link="laser_frame"/>
+        <child link="laser"/>
         <origin xyz="-0.00 0.0 0.035" rpy="0.0 0.0 0.0"/>
     </joint>
 
-    <link name="laser_frame">
+    <link name="laser">
 
         <visual>
             <geometry>
@@ -34,12 +34,11 @@
 
     </link> 
 
-    <gazebo reference="laser_frame">
+    <!-- <gazebo reference="laser">
         <material>Gazebo/Grey</material>
         <sensor name="laser" type="ray">
             <pose> 0 0 0 0 0 0 </pose>
             <visualize>false</visualize>
-            <!-- <visualize>true</visualize> -->
             <update_rate>10</update_rate>
             <ray>
                 <scan>
@@ -62,5 +61,5 @@
                 <frame_name>laser_frame</frame_name>
             </plugin>
             </sensor>
-    </gazebo>
+    </gazebo> -->
 </robot>

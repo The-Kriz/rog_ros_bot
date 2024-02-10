@@ -11,8 +11,8 @@
     <!--base_footprint -->
 
     <joint name="base_footprint_joint" type="fixed">
-        <parent link="base_link"/>
-        <child link="base_footprint"/>
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint>
 
@@ -89,6 +89,7 @@
     <xacro:robot_pillar parent="chassis" child="jetson_base_pillar2" standoff_mass="0.003" standoff_length="0.04" standoff_radius="0.003" xyz="0.06  -0.07 0.07" />
     <xacro:robot_pillar parent="chassis" child="jetson_base_pillar3" standoff_mass="0.003" standoff_length="0.04" standoff_radius="0.003" xyz="-0.06 0.07  0.07" />
     <xacro:robot_pillar parent="chassis" child="jetson_base_pillar4" standoff_mass="0.003" standoff_length="0.04" standoff_radius="0.003" xyz="-0.06 -0.07 0.07" />
+
 
 </robot>
 

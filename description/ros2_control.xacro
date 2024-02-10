@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <xacro:macro name="define_wheel_joint" params="joint_name">
-        <joint name="wheel_${joint_name}_joint">
+        <joint name="${joint_name}_wheel_joint">
             <command_interface name="velocity">
                 <params name="min">-10.0</params>
                 <params name="max">10.0</params>
@@ -12,49 +12,47 @@
         </joint>
     </xacro:macro>
 
+    <ros2_control name="GazeboSystem" type="system">
+        <hardware>
+            <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+        </hardware>
 
-    <xacro:unless value="$(arg sim_mode)">
-        <ros2_control name="RealRobot" type="system">
-            <hardware>
-            <plugin>diffdrive_arduino/DiffDriveArduinoHardware</plugin>
-                <param name="wheel_front_left_joint">wheel_front_left_joint</param>
-                <param name="wheel_front_right_joint">wheel_front_right_joint</param>
-                <param name="wheel_rear_left_joint">wheel_rear_left_joint</param>
-                <param name="wheel_rear_right_joint">wheel_rear_right_joint</param>
-                <param name="loop_rate">30</param>
-                <param name="device">/dev/ttyUSB0</param>
-                <param name="baud_rate">57600</param>
-                <param name="timeout_ms">1000</param>
-                <param name="enc_counts_per_rev">19560</param>
-            </hardware>
+        <xacro:define_wheel_joint joint_name="front_left"/>
+        <xacro:define_wheel_joint joint_name="front_right"/>
+        <xacro:define_wheel_joint joint_name="rear_left"/>
+        <xacro:define_wheel_joint joint_name="rear_right"/>
 
-            <xacro:define_wheel_joint joint_name="front_left"/>
-            <xacro:define_wheel_joint joint_name="front_right"/>
-            <xacro:define_wheel_joint joint_name="rear_left"/>
-            <xacro:define_wheel_joint joint_name="rear_right"/>
-
-        </ros2_control>
-    </xacro:unless>
-
-    <xacro:if value="$(arg sim_mode)">
-        <ros2_control name="GazeboSystem" type="system">
-            <hardware>
-                <plugin>gazebo_ros2_control/GazeboSystem</plugin>
-            </hardware>
-
-            <xacro:define_wheel_joint joint_name="front_left"/>
-            <xacro:define_wheel_joint joint_name="front_right"/>
-            <xacro:define_wheel_joint joint_name="rear_left"/>
-            <xacro:define_wheel_joint joint_name="rear_right"/>
-
-        </ros2_control>
-    </xacro:if>
-
+    </ros2_control>
 
     <gazebo>
         <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
             <parameters>$(find rog_ros_bot)/config/my_controllers.yaml</parameters>
             <parameters>$(find rog_ros_bot)/config/gaz_ros2_ctl_use_sim.yaml</parameters>
+            <!-- <ros>
+                <argument>odom:=odom/unfiltered</argument>
+            </ros>
+
+            <num_wheel_pairs>2</num_wheel_pairs>
+            <left_joint>front_left_wheel_joint</left_joint>
+            <right_joint>front_right_wheel_joint</right_joint>
+            <left_joint>rear_left_wheel_joint</left_joint>
+            <right_joint>rear_right_wheel_joint</right_joint>
+
+            <wheel_separation>0.215</wheel_separation>
+            <wheel_separation>0.215</wheel_separation>
+            <wheel_diameter>0.038</wheel_diameter>
+            <wheel_diameter>0.038</wheel_diameter>
+
+            <updateRate>100</updateRate>
+            <max_wheel_torque>50</max_wheel_torque>
+            <max_wheel_acceleration>10.0</max_wheel_acceleration>
+
+            <robot_base_frame>base_footprint</robot_base_frame>
+            <publish_odom>true</publish_odom> 
+            <publish_odom_tf>false</publish_odom_tf>
+            <publish_wheel_tf>true</publish_wheel_tf>
+            <odometry_frame>odom</odometry_frame> -->
+
         </plugin>
     </gazebo>
 

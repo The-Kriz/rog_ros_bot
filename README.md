@@ -15,11 +15,6 @@
 </br>
 
 ## URDF
-![rviz pic](https://github.com/The-Kriz/rog_ros_bot/assets/90817926/cbf302e6-66fe-47a0-bc24-b182f577a467)
-![gazebo](https://github.com/The-Kriz/rog_ros_bot/assets/90817926/12e0c792-45bc-40ff-9b38-798369b841f1)
+![Screenshot from 2023-09-07 19-45-02](https://github.com/The-Kriz/rog_ros_bot/assets/90817926/1e616b56-96be-48f9-88ae-524062fa1286)
+![Screenshot from 2023-09-07 19-46-45](https://github.com/The-Kriz/rog_ros_bot/assets/90817926/b035e7f9-fc5e-4fd1-a0b4-2d4512c91451)
 
-</br>
-</br>
-
-## SLAM
-![SLAM](https://github.com/The-Kriz/rog_ros_bot/assets/90817926/e7643d32-d192-4799-8a7c-126aeaa817d5)
